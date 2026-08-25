@@ -34,7 +34,7 @@
             tapping-term-ms = <220>;
             quick-tap-ms = <150>;
             require-prior-idle-ms = <120>;
-            bindings = <&kp &mo>;
+            bindings = <&kp &kp>;
         };
         tmux_prefix_td: tmux_prefix_td {
             compatible = "zmk,behavior-tap-dance";
