@@ -4,10 +4,11 @@
  * push, grab glove80.uf2 from Actions, flash each half.
  *
  * HRM on A/S/D/F + J/K/L/;, thumbs = space(x2)/enter/backspace/SYM/NAV/FN/WM/WM-move,
- * Esc = J+K combo or right-inner thumb key, tmux prefix = double-tap left
- * inner thumb (tap = space, 2x = backtick), Delete on NAV, WM layers emit
- * SUPER+numpad (matches ~/.config/hypr/bindings.lua numpad workspace grid --
- * NO omarchy changes needed).
+ * Esc = J+K combo or right-middle thumb key, tmux command mode = hold the
+ * right-thumb inner key (tap = space): while held, each key sends
+ * prefix+command (e.g. = -> backtick+equal, % -> backtick+%, " -> backtick+").
+ * Delete on NAV, WM layers emit SUPER+numpad (matches ~/.config/hypr/bindings.lua
+ * numpad workspace grid): 1/2/3 on J/K/L, 4/5/6 on M/,/., 7/8/9 on U/I/O.
  */
 
 #include <behaviors.dtsi>
@@ -23,6 +24,7 @@
 #define WMMV 4
 #define FN 5
 #define MAGIC 6
+#define TMUX 7
 
 / {
     behaviors {
@@ -30,17 +32,70 @@
             compatible = "zmk,behavior-hold-tap";
             label = "HRM";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <220>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
             quick-tap-ms = <150>;
-            require-prior-idle-ms = <120>;
+            require-prior-idle-ms = <100>;
             bindings = <&kp &kp>;
         };
-        tmux_prefix_td: tmux_prefix_td {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
+        tmux_lt: tmux_lt {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TMUX_LT";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
             tapping-term-ms = <150>;
-            bindings = <&kp SPACE>, <&kp GRAVE>;
+            quick-tap-ms = <100>;
+            bindings = <&mo &kp>;
+        };
+        tmux_eq: tmux_eq {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp EQUAL>;
+        };
+        tmux_dquote: tmux_dquote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp LS(N2)>;
+        };
+        tmux_pct: tmux_pct {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp LS(N5)>;
+        };
+        tmux_c: tmux_c {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp C>;
+        };
+        tmux_n: tmux_n {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp N>;
+        };
+        tmux_p: tmux_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp P>;
+        };
+        tmux_w: tmux_w {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp W>;
+        };
+        tmux_o: tmux_o {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp O>;
+        };
+        tmux_z: tmux_z {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp Z>;
+        };
+        tmux_d: tmux_d {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp D>;
         };
         caps_word: caps_word {
             compatible = "zmk,behavior-caps-word";
@@ -65,7 +120,7 @@
             &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS
             &kp TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp BSLH
             &caps_word &hrm LCTRL A &hrm LGUI S &hrm LALT D &hrm LSHFT F &kp G &kp H &kp J &kp K &hrm RSHFT L &hrm RCTRL SEMI &kp SQT
-            &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &mo SYM &mo NAV &tmux_prefix_td &mo FN &kp ESC &mo WMMV &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp PG_UP
+            &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &mo SYM &mo NAV &tmux_lt TMUX SPACE &mo FN &kp ESC &mo WMMV &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp PG_UP
             &none &none &kp DEL &kp LEFT &kp RIGHT &kp LGUI &kp BSPC &mo WM &kp DEL &kp SPACE &kp RET &kp UP &kp DOWN &kp LBKT &kp RBKT &kp PG_DN
             >;
         };
@@ -95,10 +150,10 @@
         wm_layer {
             bindings = <
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &kp LG(KP_N7) &kp LG(KP_N8) &kp LG(KP_N9) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &kp LG(KP_N4) &kp LG(KP_N2) &kp LG(KP_N6) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &kp LG(KP_N1) &kp LG(KP_N5) &kp LG(KP_N3) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &kp LG(KP_N1) &kp LG(KP_N2) &kp LG(KP_N3) &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp LG(KP_N4) &kp LG(KP_N5) &kp LG(KP_N6) &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
@@ -106,10 +161,10 @@
         wmmv_layer {
             bindings = <
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &kp LG(LS(KP_N7)) &kp LG(LS(KP_N8)) &kp LG(LS(KP_N9)) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &kp LG(LS(KP_N4)) &kp LG(LS(KP_N2)) &kp LG(LS(KP_N6)) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &kp LG(LS(KP_N1)) &kp LG(LS(KP_N5)) &kp LG(LS(KP_N3)) &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &kp LG(LS(KP_N1)) &kp LG(LS(KP_N2)) &kp LG(LS(KP_N3)) &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp LG(LS(KP_N4)) &kp LG(LS(KP_N5)) &kp LG(LS(KP_N6)) &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
@@ -133,6 +188,17 @@
             &bootloader &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF &none &none &none &none &none &bootloader
             &sys_reset &none &none &none &none &none &bt BT_SEL 2 &bt BT_SEL 3 &none &none &none &none &none &none &none &none &none &none
             &sys_reset &none &none &none &none &none &bt BT_SEL 0 &bt BT_SEL 1 &out OUT_USB &none &none &none &none &none &none &none
+            >;
+        };
+
+        tmux_layer {
+            bindings = <
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &kp tmux_eq &trans &kp tmux_dquote &trans &trans &kp tmux_pct &trans &trans &trans &trans &trans &trans
+            &trans &trans &kp tmux_w &trans &trans &trans &trans &trans &trans &kp tmux_o &kp tmux_p &trans
+            &trans &trans &trans &kp tmux_d &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &kp tmux_z &trans &kp tmux_c &trans &trans &trans &trans &trans &trans &trans &trans &kp tmux_n &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
 
