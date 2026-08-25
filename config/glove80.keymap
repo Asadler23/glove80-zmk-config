@@ -233,7 +233,7 @@
             &trans &trans &tmux_w &trans &trans &trans &trans &trans &trans &tmux_o &tmux_p &trans
             &trans &trans &tmux_s &trans &trans &trans &tmux_h &tmux_j &tmux_k &tmux_l &trans &trans
             &trans &tmux_z &tmux_x &tmux_c &trans &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &trans &tmux_x &tmux_eq &tmux_c &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &tmux_eq &tmux_x &tmux_c &trans &trans &trans &trans &trans
             >;
         };
 
