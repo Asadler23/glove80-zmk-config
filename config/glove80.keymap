@@ -194,10 +194,10 @@
         tmux_layer {
             bindings = <
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-            &kp tmux_eq &trans &kp tmux_dquote &trans &trans &kp tmux_pct &trans &trans &trans &trans &trans &trans
-            &trans &trans &kp tmux_w &trans &trans &trans &trans &trans &trans &kp tmux_o &kp tmux_p &trans
-            &trans &trans &trans &kp tmux_d &trans &trans &trans &trans &trans &trans &trans &trans
-            &trans &kp tmux_z &trans &kp tmux_c &trans &trans &trans &trans &trans &trans &trans &trans &kp tmux_n &trans &trans &trans &trans &trans &trans
+            &tmux_eq &trans &tmux_dquote &trans &trans &tmux_pct &trans &trans &trans &trans &trans &trans
+            &trans &trans &tmux_w &trans &trans &trans &trans &trans &trans &tmux_o &tmux_p &trans
+            &trans &trans &trans &tmux_d &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &tmux_z &trans &tmux_c &trans &trans &trans &trans &trans &trans &trans &trans &tmux_n &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
