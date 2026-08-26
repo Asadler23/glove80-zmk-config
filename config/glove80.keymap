@@ -3,6 +3,9 @@
  * Build: fork moergo-sc/glove80-zmk-config, put this in config/glove80.keymap,
  * push, grab glove80.uf2 from Actions, flash each half.
  *
+ * HRM is bilateral: left-hand mods (hml) only engage for right-hand/thumb keys
+ * and vice versa (hmr), so same-hand rolls resolve as letters instantly with no
+ * tapping-term stall. Multi-mod chords must cross hands (e.g. Ctrl on A + Shift on L).
  * HRM on A/S/D/F + J/K/L/;, thumbs = left: SYM/NAV/tmux-space + WM-move/backspace/WM,
  * right: FN/Esc/SUPER + SYM/space/enter (SYM on both thumbs so any symbol can be
  * reached cross-hand; both WM layers hold on the left thumb, targets on the right).
@@ -14,6 +17,10 @@
  * SYM home row is mirrored: pinky->index is < { [ ( on the left and ) ] } >
  * on the right (openers left, closers right, same finger); inner index is
  * = / _. Right-hand N M , . / stay &trans so , and . work while SYM is held.
+ * SYM row above home is the operator row: left pinky->index-stretch is
+ * \ | & % ?, right index-stretch->pinky is ^ - + * /, so U I O P reads
+ * "- + * /" in arithmetic order and % sits on the left index home column
+ * instead of a lateral stretch.
  */
 
 #include <behaviors.dtsi>
@@ -31,16 +38,45 @@
 #define MAGIC 6
 #define TMUX 7
 
+/* Key positions for bilateral home-row mods. Rows are 10/12/12/12/18/16 keys.
+ * Thumbs are listed for both hands so mod+space/enter/layer still works. */
+#define LEFT_HAND  0 1 2 3 4 \
+                   10 11 12 13 14 15 \
+                   22 23 24 25 26 27 \
+                   34 35 36 37 38 39 \
+                   46 47 48 49 50 51 \
+                   64 65 66 67 68
+#define RIGHT_HAND 5 6 7 8 9 \
+                   16 17 18 19 20 21 \
+                   28 29 30 31 32 33 \
+                   40 41 42 43 44 45 \
+                   58 59 60 61 62 63 \
+                   75 76 77 78 79
+#define THUMBS     52 53 54 55 56 57 \
+                   69 70 71 72 73 74
+
 / {
     behaviors {
-        hrm: hold_tap {
+        hml: hold_tap_left {
             compatible = "zmk,behavior-hold-tap";
-            label = "HRM";
+            label = "HML";
             #binding-cells = <2>;
             flavor = "balanced";
-            tapping-term-ms = <200>;
+            tapping-term-ms = <170>;
             quick-tap-ms = <150>;
             require-prior-idle-ms = <100>;
+            hold-trigger-key-positions = <RIGHT_HAND THUMBS>;
+            bindings = <&kp &kp>;
+        };
+        hmr: hold_tap_right {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMR";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <170>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <100>;
+            hold-trigger-key-positions = <LEFT_HAND THUMBS>;
             bindings = <&kp &kp>;
         };
         tmux_lt: tmux_lt {
@@ -160,7 +196,7 @@
             &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10
             &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS
             &kp TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp BSLH
-            &caps_word &hrm LCTRL A &hrm LGUI S &hrm LALT D &hrm LSHFT F &kp G &kp H &kp J &kp K &hrm RSHFT L &hrm RCTRL SEMI &kp SQT
+            &caps_word &hml LCTRL A &hml LGUI S &hml LALT D &hml LSHFT F &kp G &kp H &kp J &kp K &hmr RSHFT L &hmr RCTRL SEMI &kp SQT
             &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &mo SYM &mo NAV &tmux_lt TMUX SPACE &mo FN &kp ESC &kp LGUI &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp PG_UP
             &none &none &kp DEL &kp LEFT &kp RIGHT &mo WMMV &kp BSPC &mo WM &mo SYM &kp SPACE &kp RET &kp UP &kp DOWN &kp LBKT &kp RBKT &kp PG_DN
             >;
@@ -170,7 +206,7 @@
             bindings = <
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCT &kp CARET &kp AMPS &kp ASTERISK &kp TILDE &kp PIPE &kp UNDER
-            &trans &kp BSLH &kp PIPE &kp AMPS &kp ASTERISK &kp PRCT &kp CARET &kp MINUS &kp PLUS &kp FSLH &kp QMARK &trans
+            &trans &kp BSLH &kp PIPE &kp AMPS &kp PRCT &kp QMARK &kp CARET &kp MINUS &kp PLUS &kp ASTERISK &kp FSLH &trans
             &trans &kp LT &kp LBRC &kp LBKT &kp LPAR &kp EQUAL &kp UNDER &kp RPAR &kp RBKT &kp RBRC &kp GT &trans
             &trans &kp SEMI &kp SQT &kp DQT &kp COLON &kp EXCL &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
@@ -237,7 +273,7 @@
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &trans &tmux_dquote &trans &trans &tmux_pct &trans &trans &trans &trans &trans &trans
             &trans &trans &tmux_w &trans &trans &trans &trans &trans &trans &tmux_o &tmux_p &trans
-            &trans &trans &tmux_s &trans &trans &trans &tmux_h &tmux_j &tmux_k &tmux_l &trans &trans
+            &trans &trans &tmux_s &tmux_d &trans &trans &tmux_h &tmux_j &tmux_k &tmux_l &trans &trans
             &trans &tmux_z &tmux_x &tmux_c &trans &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &tmux_x &tmux_eq &tmux_c &trans &trans &trans &trans &trans
             >;
