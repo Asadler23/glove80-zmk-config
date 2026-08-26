@@ -9,6 +9,9 @@
  * prefix+command (e.g. = -> backtick+equal, % -> backtick+%, " -> backtick+").
  * Delete on NAV, WM layers emit SUPER+numpad (matches ~/.config/hypr/bindings.lua
  * numpad workspace grid): 1/2/3 on J/K/L, 4/5/6 on M/,/., 7/8/9 on U/I/O.
+ * SYM home row is mirrored: pinky->index is < { [ ( on the left and ) ] } >
+ * on the right (openers left, closers right, same finger); inner index is
+ * = / _. Right-hand N M , . / stay &trans so , and . work while SYM is held.
  */
 
 #include <behaviors.dtsi>
@@ -143,6 +146,7 @@
         combo_esc {
             timeout-ms = <50>;
             key-positions = <41 42>;
+            layers = <DEFAULT>;
             bindings = <&kp ESC>;
         };
     };
@@ -164,9 +168,9 @@
             bindings = <
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCT &kp CARET &kp AMPS &kp ASTERISK &kp TILDE &kp PIPE &kp UNDER
-            &trans &trans &kp LT &kp GT &kp PLUS &kp EQUAL &trans &trans &trans &trans &trans &trans
-            &trans &kp LPAR &kp RPAR &kp LBRC &kp RBRC &kp LBKT &kp RBKT &kp FSLH &kp BSLH &kp COLON &kp GRAVE
-            &kp MINUS &trans &kp PLUS &kp EQUAL &kp UNDER &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+            &trans &kp BSLH &kp PIPE &kp AMPS &kp ASTERISK &kp PRCT &kp CARET &kp MINUS &kp PLUS &kp FSLH &kp QMARK &trans
+            &trans &kp LT &kp LBRC &kp LBKT &kp LPAR &kp EQUAL &kp UNDER &kp RPAR &kp RBKT &kp RBRC &kp GT &trans
+            &trans &kp SEMI &kp SQT &kp DQT &kp COLON &kp EXCL &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
@@ -232,8 +236,8 @@
             &trans &trans &tmux_dquote &trans &trans &tmux_pct &trans &trans &trans &trans &trans &trans
             &trans &trans &tmux_w &trans &trans &trans &trans &trans &trans &tmux_o &tmux_p &trans
             &trans &trans &tmux_s &trans &trans &trans &tmux_h &tmux_j &tmux_k &tmux_l &trans &trans
-            &trans &tmux_z &tmux_x &tmux_c &trans &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans &trans &tmux_x &tmux_eq &tmux_c &trans &trans &trans &trans &trans
+            &trans &tmux_z &tmux_x &tmux_c &trans &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans &trans &trans &tmux_x &tmux_eq &tmux_c &trans &trans &trans &trans &trans
             >;
         };
 
