@@ -3,11 +3,13 @@
  * Build: fork moergo-sc/glove80-zmk-config, put this in config/glove80.keymap,
  * push, grab glove80.uf2 from Actions, flash each half.
  *
- * HRM on A/S/D/F + J/K/L/;, thumbs = space(x2)/enter/backspace/SYM/NAV/FN/WM/WM-move,
+ * HRM on A/S/D/F + J/K/L/;, thumbs = left: SYM/NAV/tmux-space + WM-move/backspace/WM,
+ * right: FN/Esc/SUPER + SYM/space/enter (SYM on both thumbs so any symbol can be
+ * reached cross-hand; both WM layers hold on the left thumb, targets on the right).
  * Esc = J+K combo or right-middle thumb key, tmux command mode = hold the
  * right-thumb inner key (tap = space): while held, each key sends
  * prefix+command (e.g. = -> backtick+equal, % -> backtick+%, " -> backtick+").
- * Delete on NAV, WM layers emit SUPER+numpad (matches ~/.config/hypr/bindings.lua
+ * Delete on NAV and bottom-row left, WM layers emit SUPER+numpad (matches ~/.config/hypr/bindings.lua
  * numpad workspace grid): 1/2/3 on J/K/L, 4/5/6 on M/,/., 7/8/9 on U/I/O.
  * SYM home row is mirrored: pinky->index is < { [ ( on the left and ) ] } >
  * on the right (openers left, closers right, same finger); inner index is
@@ -159,8 +161,8 @@
             &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS
             &kp TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp BSLH
             &caps_word &hrm LCTRL A &hrm LGUI S &hrm LALT D &hrm LSHFT F &kp G &kp H &kp J &kp K &hrm RSHFT L &hrm RCTRL SEMI &kp SQT
-            &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &mo SYM &mo NAV &tmux_lt TMUX SPACE &mo FN &kp ESC &mo WMMV &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp PG_UP
-            &none &none &kp DEL &kp LEFT &kp RIGHT &kp LGUI &kp BSPC &mo WM &kp DEL &kp SPACE &kp RET &kp UP &kp DOWN &kp LBKT &kp RBKT &kp PG_DN
+            &kp GRAVE &kp Z &kp X &kp C &kp V &kp B &mo SYM &mo NAV &tmux_lt TMUX SPACE &mo FN &kp ESC &kp LGUI &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp PG_UP
+            &none &none &kp DEL &kp LEFT &kp RIGHT &mo WMMV &kp BSPC &mo WM &mo SYM &kp SPACE &kp RET &kp UP &kp DOWN &kp LBKT &kp RBKT &kp PG_DN
             >;
         };
 
