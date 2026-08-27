@@ -183,6 +183,10 @@
             compatible = "zmk,behavior-caps-word";
             #binding-cells = <0>;
         };
+        bat: battery {
+            compatible = "zmk,behavior-battery";
+            #binding-cells = <1>;
+        };
     };
 
     combos {
@@ -269,7 +273,7 @@
             &none &none &none &none &none &none &none &none &none &none &none &none
             &none &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG &none &none &none &none &none &none
             &bootloader &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF &none &none &none &none &none &bootloader
-            &sys_reset &none &none &none &none &none &bt BT_SEL 2 &bt BT_SEL 3 &none &none &none &none &none &none &none &none &none &none
+            &sys_reset &none &none &none &none &bat BATTERY_LEVEL &bt BT_SEL 2 &bt BT_SEL 3 &none &none &none &none &bat BATTERY_LEVEL &none &none &none &none &none
             &sys_reset &none &none &none &none &none &bt BT_SEL 0 &bt BT_SEL 1 &out OUT_USB &none &none &none &none &none &none &none
             >;
         };
