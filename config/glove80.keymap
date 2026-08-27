@@ -12,6 +12,7 @@
  * Esc = J+K combo or right-middle thumb key, tmux command mode = hold the
  * right-thumb inner key (tap = space): while held, each key sends
  * prefix+command (e.g. = -> backtick+equal, % -> backtick+%, " -> backtick+").
+ * tmux V = prefix+[ -> copy/visual mode (mode-keys vi, so v selects, y yanks).
  * Delete on NAV and bottom-row left, WM layers emit SUPER+numpad (matches ~/.config/hypr/bindings.lua
  * numpad workspace grid): 1/2/3 on J/K/L, 4/5/6 on M/,/., 7/8/9 on U/I/O.
  * SYM home row is mirrored: pinky->index is < { [ ( on the left and ) ] } >
@@ -173,6 +174,11 @@
             #binding-cells = <0>;
             bindings = <&kp GRAVE &kp S>;
         };
+        tmux_copy: tmux_copy {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GRAVE &kp LBKT>;
+        };
         caps_word: caps_word {
             compatible = "zmk,behavior-caps-word";
             #binding-cells = <0>;
@@ -274,7 +280,7 @@
             &trans &trans &tmux_dquote &trans &trans &tmux_pct &trans &trans &trans &trans &trans &trans
             &trans &trans &tmux_w &trans &trans &trans &trans &trans &trans &tmux_o &tmux_p &trans
             &trans &trans &tmux_s &tmux_d &trans &trans &tmux_h &tmux_j &tmux_k &tmux_l &trans &trans
-            &trans &tmux_z &tmux_x &tmux_c &trans &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans
+            &trans &tmux_z &tmux_x &tmux_c &tmux_copy &trans &trans &trans &trans &trans &tmux_dash &trans &tmux_n &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans &trans &trans &tmux_x &tmux_eq &tmux_c &trans &trans &trans &trans &trans
             >;
         };
